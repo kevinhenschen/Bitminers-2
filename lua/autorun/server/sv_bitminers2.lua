@@ -28,7 +28,15 @@ function P:SellBitcoins(bitminer)
 			return 
 		end
 
-		self:addMoney(bitminer.bitcoin * BM2CONFIG.BitcoinValue)
+		local amount = bitminer.bitcoin * BM2CONFIG.BitcoinValue;
+		local mt = BM2CONFIG.MoneyType
+
+		if(mt["DRP"] == true) then self:addMoney(amount)
+		elseif(mt["PS1"] == true) then self:PS_GivePoints(amount)
+		elseif(mt["PS2"] == true) then self:PS2_AddStandardPoints(amount) end
+		elseif(mt["CUSTOM"] == true) then BM2CONFIG.addMoney(ply,amount) end   // IF USE CUSTOM DON'T FORGET TO CHANGE CODE INSIDE THIS FUNCTION ! ;)
+		// ELSE GIVE NO POINTS :(
+		
 		bitminer.bitcoin = 0
 		bitminer:SetBitcoinAmount(0)
 	end
@@ -242,8 +250,19 @@ net.Receive("BM2.Command.Upgrade", function(len, ply)
 			if type then
 				//Upgrade Cores
 				if e.upgrades.CORES.cost[e.upgradeTracker.cores + 1] ~= nil then
-					if ply:canAfford(e.upgrades.CORES.cost[e.upgradeTracker.cores + 1]) then
-						ply:addMoney(e.upgrades.CORES.cost[e.upgradeTracker.cores + 1] * -1)
+
+					local amount = e.upgrades.CORES.cost[e.upgradeTracker.cores + 1];
+					local mt = BM2CONFIG.MoneyType;
+					local canAffrod = (mt["DRP"] == true and ply:canAfford(amount) or (mt["PS1"] == true and ply:PS_HasPoints(amount) or (mt["PS2"] == true and ((ply.PS2_Wallet.points - amount) >= 0) or (mt["CUSTOM"] == true and BM2ONFIG.canAfford(ply,amount) or true)))) // ELSE ALL FREE :o
+
+					if canAffrod then
+
+						if(mt["DRP"] == true) then ply:addMoney(-amount)
+						elseif(mt["PS1"] == true) then ply:PS_TakePoints(amount)
+						elseif(mt["PS2"] == true) then ply:PS2_AddStandardPoints(-amount) end
+						elseif(mt["CUSTOM"] == true) then BM2ONFIG.takeMoney(ply,amount) end
+						// ELSE ALL FREE :o 
+
 						e.upgradeTracker.cores = e.upgradeTracker.cores + 1
 						e:SetCoreUpgrade(e.upgradeTracker.cores)
 						e.cores = e.cores + 1
@@ -260,8 +279,19 @@ net.Receive("BM2.Command.Upgrade", function(len, ply)
 			else
 				//Upgrade Cores
 				if e.upgrades.CPU.cost[e.upgradeTracker.cpu + 1] ~= nil then
-					if ply:canAfford(e.upgrades.CPU.cost[e.upgradeTracker.cpu + 1]) then
-						ply:addMoney(e.upgrades.CPU.cost[e.upgradeTracker.cpu + 1] * -1)
+
+					local amount = e.upgrades.CPU.cost[e.upgradeTracker.cpu + 1];
+					local mt = BM2CONFIG.MoneyType;
+					local canAffrod = (mt["DRP"] == true and ply:canAfford(amount) or (mt["PS1"] == true and ply:PS_HasPoints(amount) or (mt["PS2"] == true and ((ply.PS2_Wallet.points - amount) >= 0) or (mt["CUSTOM"] == true and BM2ONFIG.canAfford(ply,amount) or true)))) // ELSE ALL FREE :o
+
+					if canAffrod then
+
+						if(mt["DRP"] == true) then ply:addMoney(-amount)
+						elseif(mt["PS1"] == true) then ply:PS_TakePoints(amount)
+						elseif(mt["PS2"] == true) then ply:PS2_AddStandardPoints(-amount) end
+						elseif(mt["CUSTOM"] == true) then BM2ONFIG.takeMoney(ply,amount) end
+						// ELSE ALL FREE :o 
+
 						e.clockSpeed = e.clockSpeed + e.upgrades.CPU.amountPerUpgrade
 						e.upgradeTracker.cpu = e.upgradeTracker.cpu + 1
 						e:SetClockSpeed(e.clockSpeed)

@@ -27,6 +27,26 @@ BM2CONFIG.BitminerSpeedMulipliers = {
 	["bitminerRack"] = 1
 }
 
+--Money Settings
+BM2CONFIG.MoneyType = {
+	["DRP"] = false,
+	["PS1"] = false,
+	["PS2"] = true,
+	["CUSTOM"] = false
+}
+
+--Money Settings (Custom Functions)
+BM2ONFIG.canAfford(ply,amount)
+	// CODE HERE CAN AFFROD
+end
+BM2ONFIG.addMoney(ply,amount)
+	// CODE HERE ADD MONEY
+end
+BM2ONFIG.takeMoney(ply,amount)
+	// CODE HERE TAKE MONEY
+end
+--
+
 hook.Add("loadCustomDarkRPItems", "BM2.RegisterEntities", function()
 	DarkRP.createCategory{
 		name = "Bitminers 2",
