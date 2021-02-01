@@ -33,7 +33,7 @@ function P:SellBitcoins(bitminer)
 
 		if(mt["DRP"] == true) then self:addMoney(amount)
 		elseif(mt["PS1"] == true) then self:PS_GivePoints(amount)
-		elseif(mt["PS2"] == true) then self:PS2_AddStandardPoints(amount) end
+		elseif(mt["PS2"] == true) then self:PS2_AddStandardPoints(amount)
 		elseif(mt["CUSTOM"] == true) then BM2CONFIG.addMoney(ply,amount) end   // IF USE CUSTOM DON'T FORGET TO CHANGE CODE INSIDE THIS FUNCTION ! ;)
 		// ELSE GIVE NO POINTS :(
 		
@@ -259,7 +259,7 @@ net.Receive("BM2.Command.Upgrade", function(len, ply)
 
 						if(mt["DRP"] == true) then ply:addMoney(-amount)
 						elseif(mt["PS1"] == true) then ply:PS_TakePoints(amount)
-						elseif(mt["PS2"] == true) then ply:PS2_AddStandardPoints(-amount) end
+						elseif(mt["PS2"] == true) then ply:PS2_AddStandardPoints(-amount)
 						elseif(mt["CUSTOM"] == true) then BM2ONFIG.takeMoney(ply,amount) end
 						// ELSE ALL FREE :o 
 
@@ -288,7 +288,7 @@ net.Receive("BM2.Command.Upgrade", function(len, ply)
 
 						if(mt["DRP"] == true) then ply:addMoney(-amount)
 						elseif(mt["PS1"] == true) then ply:PS_TakePoints(amount)
-						elseif(mt["PS2"] == true) then ply:PS2_AddStandardPoints(-amount) end
+						elseif(mt["PS2"] == true) then ply:PS2_AddStandardPoints(-amount)
 						elseif(mt["CUSTOM"] == true) then BM2ONFIG.takeMoney(ply,amount) end
 						// ELSE ALL FREE :o 
 
