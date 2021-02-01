@@ -36,13 +36,13 @@ BM2CONFIG.MoneyType = {
 }
 
 --Money Settings (Custom Functions)
-BM2ONFIG.canAfford(ply,amount)
+BM2CONFIG.canAfford = function(ply,amount)
 	// CODE HERE CAN AFFROD
 end
-BM2ONFIG.addMoney(ply,amount)
+BM2CONFIG.addMoney = function(ply,amount)
 	// CODE HERE ADD MONEY
 end
-BM2ONFIG.takeMoney(ply,amount)
+BM2CONFIG.takeMoney = function(ply,amount)
 	// CODE HERE TAKE MONEY
 end
 --
